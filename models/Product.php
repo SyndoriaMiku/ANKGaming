@@ -101,4 +101,13 @@ class Product {
         $stmt->execute();
     }
 
+    public static function getByKeyword($keyword) {
+        $keyword = "%$keyword%";
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE CONCAT('%', ?, '%')");
+        $stmt->bind_param("s", $keyword);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
 }

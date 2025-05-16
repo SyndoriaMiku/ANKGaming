@@ -21,4 +21,8 @@ class ProductController {
         $product = Product::getById($id);
         include __DIR__ . '/../views/products/detail.php';
     }
+    public static function filter($keyword) {
+        $products = Product::getByKeyword($keyword);
+        include __DIR__ . '/../views/products/index.php';
+    }
 }
