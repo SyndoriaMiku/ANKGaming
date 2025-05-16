@@ -17,7 +17,7 @@
 </div>
 
 <style>
-    /* CSS chung cho cả 2 trang */
+
 :root {
     --primary-color: #3498db;
     --secondary-color: #2ecc71;
