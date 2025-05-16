@@ -28,7 +28,7 @@ class Order {
 
     public static function updateOrder($conn, $id, $data) {
         $stmt = $conn->prepare("UPDATE orders SET customer_name = ?, address = ?, phone = ?, total_price = ?, status = ?, user_id = ? WHERE id = ?");
-        $stmt->bind_param("sssisi", 
+        $stmt->bind_param("sssisii", 
             $data['customer_name'],
             $data['address'],
             $data['phone'],
