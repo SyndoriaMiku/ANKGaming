@@ -18,9 +18,11 @@ class AdminOrderController {
     public function store() {
         global $conn;
         Order::createOrder($conn, $_POST);
-        header('Location: /admin');
+        $_SESSION['success_message'] = "Thêm đơn hàng thành công!";
+        header('Location: /admin/index.php?controller=admin_order&action=index');
+        exit;
     }
-
+    
     public function edit($id) {
         global $conn;
         $order = Order::getOrderById($conn, $id);
@@ -30,14 +32,17 @@ class AdminOrderController {
     public function update($id) {
         global $conn;
         Order::updateOrder($conn, $id, $_POST);
-        header('Location: /admin');
+        $_SESSION['success_message'] = "Cập nhật đơn hàng thành công!";
+        header('Location: /admin/index.php?controller=admin_order&action=index');
+        exit;
     }
-   
 
     public function delete($id) {
         global $conn;
         Order::deleteOrder($conn, $id);
-        header('Location: /admin');
+        $_SESSION['success_message'] = "Xóa đơn hàng thành công!";
+        header('Location: /admin/index.php?controller=admin_order&action=index');
+        exit;
     }
 }
 ?>

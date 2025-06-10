@@ -35,9 +35,9 @@ class Product {
         }
 
         $data['image'] = $imagePath;
-        
-        $stmt = $conn->prepare("INSERT INTO products (id, name, core, thread, base_clock, boost_clock, cache_l1, cache_l2, cache_l3, socket, tdp, price, stock, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssiiddssssidis",
+
+        $stmt = $conn->prepare("INSERT INTO products (id, name, core, thread, base_clock, boost_clock, cache_l1, cache_l2, cache_l3, socket, tdp, price, stock, image, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssiiddssssidiss",
             $data['id'],
             $data['name'],
             $data['core'],
@@ -51,7 +51,8 @@ class Product {
             $data['tdp'],
             $data['price'],
             $data['stock'],
-            $data['image']
+            $data['image'],
+            $data['description']
         );
         $stmt->execute();
     }
@@ -74,8 +75,8 @@ class Product {
             }
         }
         $data['image'] = $imagePath;
-        
-        $stmt = $conn->prepare("UPDATE products SET name = ?, core = ?, thread = ?, base_clock = ?, boost_clock = ?, cache_l1 = ?, cache_l2 = ?, cache_l3 = ?, socket = ?, tdp = ?, price = ?, stock = ?, image = ? WHERE id = ?");
+
+        $stmt = $conn->prepare("UPDATE products SET name = ?, core = ?, thread = ?, base_clock = ?, boost_clock = ?, cache_l1 = ?, cache_l2 = ?, cache_l3 = ?, socket = ?, tdp = ?, price = ?, stock = ?, description = ? WHERE id = ?");
         $stmt->bind_param("siiddssssidiss",
             $data['name'],
             $data['core'],
@@ -89,7 +90,7 @@ class Product {
             $data['tdp'],
             $data['price'],
             $data['stock'],
-            $data['image'],
+            $data['description'],
             $id
         );
         $stmt->execute();

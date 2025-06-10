@@ -1,10 +1,17 @@
-<?php
-require_once __DIR__ . '/../../../models/User.php';
-global $conn;
-$users = User::getAllUsers($conn);
-?>
-    
-
+<?php if (isset($_SESSION['success_message'])): ?>
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content">
+            <p><?php echo $_SESSION['success_message']; ?></p>
+            <button id="closeModal">Đóng</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('successModal').style.display = 'none';
+        });
+    </script>
+    <?php unset($_SESSION['success_message']); ?>
+<?php endif; ?>
 <div class="admin-header">
     <h2>Danh sách người dùng</h2>
 </div>
@@ -23,7 +30,7 @@ $users = User::getAllUsers($conn);
                 <td><?php echo $item['id']; ?></td>
                 <td><?php echo $item['username']; ?></td>
                 <td>
-                    <a href="index.php?controller=admin_user&action=delete&id=<?php echo $item['id']; ?>" class="btn btn-danger">Xóa</a>
+                    <a href="index.php?controller=admin_user&action=delete&id=<?php echo $item['id']; ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -255,4 +262,45 @@ body {
         font-size: 0.85rem;
     }
 }
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* nền tối */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.modal-content button {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #218838;
+}
+
 </style>

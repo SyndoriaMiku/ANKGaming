@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container">
         <h1>Edit Product</h1>
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="index.php?controller=admin_product&action=update&id=<?= htmlspecialchars($product['id']) ?>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="id">ID:</label>
                 <input type="text" name="id" id="id" value="<?= htmlspecialchars($product['id']) ?>" required readonly>
@@ -86,10 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="stock">Stock:</label>
                 <input type="text" name="stock" id="stock" value="<?= htmlspecialchars($product['stock']) ?>" >
             </div>
-                        <div class="form-group">
-                <label for="image">Image:</label>
-                <input type="file" name="image" id="image">
-                <input type="hidden" name="old_image" value="<?= htmlspecialchars($product['image']) ?>">
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea name="description" id="description" rows="4"><?= htmlspecialchars($product['description'] ?? '') ?></textarea>
             </div>
             <div class="button-group">
                 <button type="submit" class="btn btn-primary">Update Product</button> 
@@ -100,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 
 <style>
-    /* ===== GENERAL FORM STYLES ===== */
+
 .container {
     max-width: 1000px;
     margin: 30px auto;

@@ -27,6 +27,12 @@ class Order {
     }
 
     public static function updateOrder($conn, $id, $data) {
+        if ($data['user_id'] === '' || $data['user_id'] === null) {
+            $user_id = null;
+        } else {
+            $user_id = (int)$data['user_id'];
+        }
+
         $stmt = $conn->prepare("UPDATE orders SET customer_name = ?, address = ?, phone = ?, total_price = ?, status = ?, user_id = ? WHERE id = ?");
         $stmt->bind_param("sssisii", 
             $data['customer_name'],
@@ -34,7 +40,7 @@ class Order {
             $data['phone'],
             $data['total_price'],
             $data['status'],
-            $data['user_id'],
+            $user_id,
             $id
         );
         $stmt->execute();

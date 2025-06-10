@@ -37,7 +37,7 @@ if ($order) {
 <body>
     <div class="container">
         <h1>Edit Order</h1>
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="index.php?controller=admin_order&action=update&id=<?= htmlspecialchars($order['id']) ?>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="id">ID:</label>
                 <input type="text" name="id" id="id" value="<?= htmlspecialchars($order['id']) ?>" required readonly>
@@ -72,7 +72,6 @@ if ($order) {
                     <thead>
                         <tr>
                             <th>Product ID</th>
-                            <th>Product Name</th>
                             <th>Quantity</th>
                             <th>Price</th>
                         </tr>

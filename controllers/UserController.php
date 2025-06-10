@@ -9,15 +9,12 @@ class UserController {
 
     public function index() {
         global $conn;
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login.php');
             exit;
         }
         $userId = $_SESSION['user_id'];
-        $user = User::getAllUsers($conn, $userId);
+        $users = User::getAllUsers($conn, $userId);
         include __DIR__ . '/../views/admin/users/index.php';
 
     }
@@ -113,6 +110,7 @@ class UserController {
             session_start();
         }
         User::delete($conn, $id);
+        $_SESSION['success_message'] = "Xóa người dùng thành công!";
         header('Location: /admin/index.php?controller=admin_user&action=index');
         exit;
         

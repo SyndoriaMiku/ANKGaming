@@ -139,7 +139,9 @@ li:hover a::after {
 </style>
 </html>
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once __DIR__ . '/../../config/Database.php';
 
 $controller = $_GET['controller'] ?? 'admin_product';
@@ -172,7 +174,7 @@ if (method_exists($c, $action)) {
     }
 } else {
     echo "Action không tồn tại";
-    header("/admin/index.php");
+    header("Location: /admin/index.php");
     exit;
 }
 

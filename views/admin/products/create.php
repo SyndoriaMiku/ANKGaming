@@ -87,8 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="image">Image:</label>
                 <input type="file" name="image" id="image" accept="image/*" >
             </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea name="description" id="description" rows="4"></textarea>
+            </div>
             <div class="button-group">
-                <button type="submit" class="btn btn-primary">Create Product</button> 
+                <button type="submit" class="btn btn-primary">Create Product</button>
                 <a href="/admin/index.php?controller=admin_product&action=index" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
