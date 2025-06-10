@@ -4,6 +4,7 @@ require_once __DIR__ . '/../../../models/Product.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    global $conn;
     $data = $_POST;
     $imageFile = $_FILES['image'] ?? null;
 
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container">
         <h1>Create Product</h1>
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="/admin/index.php?controller=admin_product&action=store" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="id">ID:</label>
                 <input type="text" name="id" id="id" required>
