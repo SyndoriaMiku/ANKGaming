@@ -25,4 +25,21 @@ class ProductController {
         $products = Product::getByKeyword($keyword);
         include __DIR__ . '/../views/products/index.php';
     }
+    public static function filterByCategory() {
+        $filters = [
+            'brand' => $_GET['brand'] ?? [],
+            'socket' => $_GET['socket'] ?? '',
+            'price_min' => $_GET['price_min'] ?? '',
+            'price_max' => $_GET['price_max'] ?? '',
+            'core_min' => $_GET['core_min'] ?? '',
+            'core_max' => $_GET['core_max'] ?? '',
+            'boost_max' => $_GET['boost_max'] ?? '',
+            'tdp_max' => $_GET['tdp_max'] ?? '',
+        ];
+
+        $products = Product::getByFilter($filters);
+
+        include __DIR__ . '/../views/products/index.php';
+    }
+
 }

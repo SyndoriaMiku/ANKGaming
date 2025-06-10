@@ -111,4 +111,82 @@ class Product {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public static function getByFilter($filters) {
+        global $conn;
+        $query = "SELECT * FROM products WHERE 1";
+        $params = [];
+        $types = ''; // Chuỗi các loại dữ liệu cho bind_param
+        
+        // Brand Filter (tìm trong name)
+        if (!empty($filters['brand']) && is_array($filters['brand'])) {
+            $brandConditions = [];
+            foreach ($filters['brand'] as $brand) {
+                $brandConditions[] = "name LIKE ?";
+                $params[] = '%' . $brand . '%';
+                $types .= 's';
+            }
+            if (!empty($brandConditions)) {
+                $query .= " AND (" . implode(' OR ', $brandConditions) . ")";
+            }
+        }
+    
+        // Price Range Filter
+        if (!empty($filters['price_min'])) {
+            $query .= " AND price >= ?";
+            $params[] = $filters['price_min'];
+            $types .= 'd'; // double hoặc số
+        }
+        if (!empty($filters['price_max'])) {
+            $query .= " AND price <= ?";
+            $params[] = $filters['price_max'];
+            $types .= 'd';
+        }
+    
+        // Core Count Filter
+        if (!empty($filters['core_min'])) {
+            $query .= " AND core >= ?";
+            $params[] = $filters['core_min'];
+            $types .= 'd';
+        }
+        if (!empty($filters['core_max'])) {
+            $query .= " AND core <= ?";
+            $params[] = $filters['core_max'];
+            $types .= 'd';
+        }
+    
+        // Turbo Boost Maximum Filter
+        if (!empty($filters['boost_max'])) {
+            $query .= " AND boost_clock <= ?";
+            $params[] = $filters['boost_max'];
+            $types .= 'd';
+        }
+    
+        // TDP Filter
+        if (!empty($filters['tdp_max'])) {
+            $query .= " AND tdp <= ?";
+            $params[] = $filters['tdp_max'];
+            $types .= 'd';
+        }
+    
+        // Socket Filter
+        if (!empty($filters['socket'])) {
+            $query .= " AND socket LIKE ?";
+            $params[] = '%' . $filters['socket'] . '%';
+            $types .= 's';
+        }
+    
+        // Prepare and bind
+        $stmt = $conn->prepare($query);
+    
+        if (!empty($params)) {
+            // bind_param yêu cầu truyền các giá trị theo biến tham chiếu
+            $stmt->bind_param($types, ...$params);
+        }
+    
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
 }
